@@ -1,121 +1,35 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { ArrowUpRight } from 'lucide-react'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+    <main className="page-container flex min-h-svh flex-col py-8 sm:py-12">
+      <div className="flex items-center justify-between gap-4 border-b border-border pb-6 font-mono text-xs uppercase tracking-widest">
+        <span>Portfolio / Foundation</span>
+        <span className="text-accent">Phase 01</span>
+      </div>
+      <section className="section-spacing flex flex-1 flex-col justify-center" aria-labelledby="foundation-title">
+        <p className="mb-6 font-mono text-xs uppercase tracking-widest text-secondary">Design system · Development preview</p>
+        <h1 id="foundation-title" className="max-w-4xl text-5xl leading-[1.05] tracking-tight sm:text-7xl lg:text-8xl">
+          A thoughtful<br />foundation.<span className="text-accent">*</span>
+        </h1>
+        <p className="mt-8 max-w-lg text-base leading-relaxed text-secondary sm:text-lg">
+          Dark surfaces. Clear typography. Room to create.
+          The portfolio will take shape here, one phase at a time.
+        </p>
+        <a className="mt-10 inline-flex min-h-12 w-fit items-center gap-4 rounded-full bg-accent px-6 font-medium text-background transition-colors hover:bg-primary motion-reduce:transition-none" href="https://github.com/erikaleahh/portfolio" target="_blank" rel="noopener noreferrer">
+          View repository <ArrowUpRight size={18} aria-hidden="true" />
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
       </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      <div className="grid gap-6 border-t border-border pt-6 sm:grid-cols-2">
+        <div className="flex items-center gap-3" aria-label="Palette: near black, charcoal, white, gray, electric lime">
+          {['bg-background', 'bg-surface', 'bg-primary', 'bg-secondary', 'bg-accent'].map((color) => (
+            <span key={color} className={`size-6 rounded-full border border-white/20 ${color}`} aria-hidden="true" />
+          ))}
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <p className="font-mono text-xs leading-relaxed text-secondary sm:text-right">Space Grotesk / Inter / JetBrains Mono</p>
+      </div>
+    </main>
   )
 }
 

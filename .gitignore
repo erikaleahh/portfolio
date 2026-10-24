@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*.[mM][dD]
+!README.md
+
+.env
+.env.*
+!.env.example
