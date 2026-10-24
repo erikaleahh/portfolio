@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import { portfolioRepositoryUrl } from './data'
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           Dark surfaces. Clear typography. Room to create.
           The portfolio will take shape here, one phase at a time.
         </p>
-        <a className="mt-10 inline-flex min-h-12 w-fit items-center gap-4 rounded-full bg-accent px-6 font-medium text-background transition-colors hover:bg-primary motion-reduce:transition-none" href="https://github.com/erikaleahh/portfolio" target="_blank" rel="noopener noreferrer">
+        <a className="mt-10 inline-flex min-h-12 w-fit items-center gap-4 rounded-full bg-accent px-6 font-medium text-background transition-colors hover:bg-primary motion-reduce:transition-none" href={portfolioRepositoryUrl} target="_blank" rel="noopener noreferrer">
           View repository <ArrowUpRight size={18} aria-hidden="true" />
           <span className="sr-only"> (opens in a new tab)</span>
         </a>
