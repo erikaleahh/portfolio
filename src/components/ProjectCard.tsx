@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowUpRight, Code2, Image } from 'lucide-react'
+import { ArrowUpRight, Code2, Image, LockKeyhole } from 'lucide-react'
 import type { PortfolioProject } from '../data'
 import { ExternalLink } from './ExternalLink'
 import { isWebUrl } from '../utils/links'
@@ -47,12 +47,14 @@ export function ProjectCard({
             <span className="preview-caption">
               {pending
                 ? 'Q1 project · awaiting real content'
-                : 'Project image unavailable'}
+                : project.image
+                  ? 'Project image unavailable'
+                  : 'Project screenshot to be added'}
             </span>
           </div>
         )}
         <span className="project-category">
-          {pending ? 'In the making' : 'Featured project'}
+          {pending ? 'In the making' : (project.category ?? 'Featured project')}
         </span>
       </div>
       <div className="project-info">
@@ -73,13 +75,26 @@ export function ProjectCard({
             ? 'Real project details, screenshots, and links will be added here. This is a development placeholder.'
             : project.description}
         </p>
-        <ul className="tech-tags" aria-label="Technologies">
-          {project.technologies.map((technology) => (
-            <li key={technology}>{technology}</li>
-          ))}
-        </ul>
+        {project.role && (
+          <p className="project-role">
+            <span>My role</span>
+            {project.role}
+          </p>
+        )}
+        {project.technologies.length > 0 && (
+          <ul className="tech-tags" aria-label="Technologies">
+            {project.technologies.map((technology) => (
+              <li key={technology}>{technology}</li>
+            ))}
+          </ul>
+        )}
         <div className="project-links">
-          {isWebUrl(project.repositoryUrl) ? (
+          {project.repositoryVisibility === 'private' ? (
+            <span className="unavailable-link private-source">
+              <LockKeyhole size={13} aria-hidden="true" />
+              Private source
+            </span>
+          ) : isWebUrl(project.repositoryUrl) ? (
             <ExternalLink href={project.repositoryUrl} className="project-link">
               <Code2 size={15} aria-hidden="true" />
               Source code

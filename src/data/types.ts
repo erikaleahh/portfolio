@@ -23,6 +23,9 @@ export interface PortfolioProject {
   status: 'placeholder' | 'verified'
   title: string
   description: string
+  role?: string
+  category?: string
+  repositoryVisibility?: 'public' | 'private'
   technologies: readonly string[]
   image: PortfolioImage | null
   repositoryUrl: string | null

@@ -14,7 +14,7 @@ import { Contact } from '../components/Contact'
 import { Hero } from '../components/Hero'
 import { ProjectCard } from '../components/ProjectCard'
 import { ExternalLink } from '../components/ExternalLink'
-import { portfolio, type PortfolioProject } from '../data'
+import { portfolio, projects, type PortfolioProject } from '../data'
 import { isWebUrl } from '../utils/links'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -34,7 +34,11 @@ describe('Portfolio navigation and content', () => {
     expect(screen.getAllByRole('article')).toHaveLength(3)
     expect(container.textContent).toContain('Erika Leah Habaradas')
     expect(container.textContent).toContain('Digos City, Philippines')
-    expect(screen.getByRole('link', { name: /Send me an email/ }).getAttribute('href')).toBe('mailto:erikahabaradas@g.cjc.edu.ph')
+    expect(
+      screen
+        .getByRole('link', { name: /Send me an email/ })
+        .getAttribute('href'),
+    ).toBe('mailto:erikahabaradas@g.cjc.edu.ph')
     expect(
       container.querySelector(
         'a[href="null"], a[href="undefined"], a[href="[LIVE DEMO URL]"]',
@@ -136,6 +140,27 @@ describe('Portfolio navigation and content', () => {
 })
 
 describe('Configured content behavior', () => {
+  it('credits the RSVP role and links to the live site without exposing private source', () => {
+    render(
+      <ProjectCard
+        project={{
+          ...projects[0],
+          repositoryUrl: 'https://github.com/example/private-test-fixture',
+        }}
+        index={0}
+      />,
+    )
+    expect(
+      screen.getByRole('heading', { name: 'RSVP — Digital Invitations' }),
+    ).toBeTruthy()
+    expect(screen.getByText('Frontend QA & SMM')).toBeTruthy()
+    expect(screen.getByText('Private source')).toBeTruthy()
+    expect(screen.queryByRole('link', { name: /Source code/ })).toBeNull()
+    expect(
+      screen.getByRole('link', { name: /Live demo/ }).getAttribute('href'),
+    ).toBe('https://rsvpa.netlify.app/')
+    expect(screen.queryByRole('list', { name: 'Technologies' })).toBeNull()
+  })
   it('falls back to the decorative hero art if a configured portrait fails', () => {
     const original = portfolio.profileImage
     portfolio.profileImage = {

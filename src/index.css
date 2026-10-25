@@ -1469,3 +1469,24 @@ section[tabindex='-1']:focus {
 .contact-email-address + .email-actions {
   margin-top: 0.6rem;
 }
+.project-role {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-top: 1rem;
+  color: var(--color-primary);
+  font-size: 0.8rem;
+}
+.project-role > span {
+  font-family: var(--font-mono);
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.6rem;
+}
+.private-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}

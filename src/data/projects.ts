@@ -2,14 +2,18 @@ import type { PortfolioProject } from './types'
 
 export const projects: readonly PortfolioProject[] = [
   {
-    id: 'q1-project-01',
-    status: 'placeholder',
-    title: '[Q1 PROJECT 1 TITLE]',
-    description: '[PROJECT DESCRIPTION — real project details pending]',
-    technologies: ['React', 'JavaScript', 'CSS', 'GSAP'],
+    id: 'rsvp',
+    status: 'verified',
+    title: 'RSVP — Digital Invitations',
+    description:
+      'A digital invitation platform for weddings and debuts, with customizable designs, celebration details, and private draft previews.',
+    role: 'Frontend QA & SMM',
+    category: 'Digital invitations',
+    repositoryVisibility: 'private',
+    technologies: [],
     image: null,
     repositoryUrl: null,
-    liveUrl: null,
+    liveUrl: 'https://rsvpa.netlify.app/',
   },
   {
     id: 'q1-project-02',

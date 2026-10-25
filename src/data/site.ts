@@ -20,7 +20,7 @@ export const site = {
     description:
       'An evolving collection of experiments in frontend development, interaction, and motion.',
     pendingNote:
-      'A work in progress. Three Q1 projects will be added here with their actual previews, source code, and live demos.',
+      'A growing collection. Some project details and previews are still being added. Private source code is not shared.',
   },
   contact: {
     label: 'Make a connection',
