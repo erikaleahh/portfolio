@@ -159,7 +159,11 @@ describe('Configured content behavior', () => {
     expect(
       screen.getByRole('link', { name: /Live demo/ }).getAttribute('href'),
     ).toBe('https://rsvpa.netlify.app/')
-    expect(screen.queryByRole('list', { name: 'Technologies' })).toBeNull()
+    expect(
+      within(screen.getByRole('list', { name: 'Technologies' }))
+        .getAllByRole('listitem')
+        .map((item) => item.textContent),
+    ).toEqual(['Next.js', 'React', 'Tailwind CSS'])
   })
   it('falls back to the decorative hero art if a configured portrait fails', () => {
     const original = portfolio.profileImage

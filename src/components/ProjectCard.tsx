@@ -20,13 +20,22 @@ export function ProjectCard({
       aria-labelledby={`${project.id}-title`}
       data-project
     >
-      <div className="project-preview">
+      <div
+        className="project-preview"
+        style={
+          project.image?.width && project.image?.height
+            ? {
+                aspectRatio: `${project.image.width} / ${project.image.height}`,
+              }
+            : undefined
+        }
+      >
         {project.image && !failedImage ? (
           <img
             src={project.image.src}
             alt={project.image.alt}
-            width="1200"
-            height="800"
+            width={project.image.width ?? 1200}
+            height={project.image.height ?? 800}
             loading="lazy"
             decoding="async"
             onError={() => setFailedImage(true)}
