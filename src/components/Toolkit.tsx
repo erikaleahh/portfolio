@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Braces, ChevronDown, Code2, GitBranch, Layers3, MoveUpRight, Pause, Play, Sparkles } from 'lucide-react'
 import { site, toolkitGroups, toolkitDetails } from '../data'
 import { GitHubIcon } from './SocialIcons'
+import { BrandLogo } from './BrandLogo'
 
 const skillIcons = {
   HTML5: Code2, CSS3: Braces, JavaScript: Braces, React: Layers3,
@@ -83,7 +84,7 @@ function ContributionRoutine() {
             <span className="product-display" aria-hidden="true">
               <span className="product-vessel">
                 <span className="product-cap" />
-                <span className="product-label">e.<small>0{index + 1}</small></span>
+                <span className="product-label"><BrandLogo variant="small" /><small>0{index + 1}</small></span>
               </span>
             </span>
             <span className="routine-step"><span>0{index + 1}</span> {site.about.beauty.steps[index]}</span>
@@ -118,11 +119,13 @@ function ToolkitCompact() {
     const frame = window.requestAnimationFrame(() => {
       const compact = compactRef.current
       if (!compact) return
-      const panel = compact.closest('.about-beauty-studio') ?? compact
+      const panel = window.matchMedia('(max-width: 767px)').matches
+        ? compact.closest('.beauty-toolkit') ?? compact
+        : compact.closest('.about-beauty-studio') ?? compact
       const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 88
       const clearance = headerHeight + 12
       const bounds = panel.getBoundingClientRect()
-      // Keep both headings and the mirror in view, even if the tools extend below the fold.
+      // Desktop keeps both columns in view; mobile starts at the toolkit heading.
       if (Math.abs(bounds.top - clearance) <= 24) return
       window.scrollTo({
         top: Math.max(0, window.scrollY + bounds.top - clearance),
@@ -146,7 +149,7 @@ function ToolkitCompact() {
           onClick={() => setOpen(!open)}
         >
           <span className="compact-mirror" aria-hidden="true">
-            <span className="compact-monogram">e.</span>
+            <span className="compact-monogram"><BrandLogo variant="wordmark" monochrome /></span>
             <span className="compact-edition">{site.about.beauty.compactLabel}</span>
             <Sparkles size={20} strokeWidth={1} />
           </span>
@@ -174,7 +177,7 @@ function ToolkitCompact() {
                 </button>
               </li>
             ))}
-            <li className="palette-signature" aria-hidden="true">e.<span>THE EDIT</span></li>
+            <li className="palette-signature" aria-hidden="true"><BrandLogo variant="small" /><span>THE EDIT</span></li>
           </ul>
           <div className="tool-detail" id="tool-detail" aria-live="polite" aria-atomic="true">
             <span className="tool-category">{activeTool.category}</span>

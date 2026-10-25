@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import { portfolio, site, type PortfolioImage } from '../data'
+import { BrandLogo } from './BrandLogo'
 
 export function LanyardBadge({
   image,
@@ -44,7 +45,7 @@ export function LanyardBadge({
           <div className="lanyard-slot" aria-hidden="true" />
           <div className="lanyard-card-top">
             <span className="lanyard-monogram" aria-hidden="true">
-              {site.monogram}
+              <BrandLogo variant="small" />
             </span>
             <span>{site.hero.badgeLabel}</span>
             <span className="lanyard-card-dot" aria-hidden="true" />

@@ -3,6 +3,7 @@ import { GitHubIcon, LinkedInIcon } from './SocialIcons'
 import { portfolio, site } from '../data'
 import { ExternalLink } from './ExternalLink'
 import { SectionLink } from './SectionLink'
+import { BrandLogo } from './BrandLogo'
 
 const currentYear = new Date().getFullYear()
 
@@ -16,7 +17,7 @@ export function Footer() {
             className="brand"
             aria-label="Back to home"
           >
-            {site.monogram}
+            <BrandLogo variant="wordmark" />
           </SectionLink>
           <p>{site.footer}</p>
           <SectionLink section="home" className="back-to-top">

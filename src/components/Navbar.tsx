@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { sectionLinks } from '../data/navigation'
-import { portfolio, site } from '../data'
+import { portfolio } from '../data'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { SectionLink } from './SectionLink'
+import { BrandLogo } from './BrandLogo'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -62,8 +63,7 @@ export function Navbar() {
             className="brand"
             aria-label={`${portfolio.fullName ?? 'Portfolio'} — Home`}
           >
-            {site.monogram}
-            <span className="brand-mark" aria-hidden="true" />
+            <BrandLogo />
           </SectionLink>
           <nav className="desktop-nav" aria-label="Main navigation">
             {sectionLinks.map(({ id, label }) => (
@@ -107,7 +107,7 @@ export function Navbar() {
       >
         <div className="mobile-dialog-top">
           <span className="brand" aria-hidden="true">
-            {site.monogram}
+            <BrandLogo variant="wordmark" />
           </span>
           <button
             type="button"

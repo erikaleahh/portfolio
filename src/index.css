@@ -165,8 +165,7 @@ section[id] {
   background: transparent;
   border-color: rgb(148 70 92 / 35%);
 }
-.button-secondary > svg,
-.button-cv > svg {
+.button-secondary > svg {
   border-color: rgb(148 70 92 / 20%);
   background: var(--color-surface);
   color: var(--color-accent);
@@ -178,10 +177,6 @@ section[id] {
 }
 .button-secondary:hover > svg {
   background: var(--color-background);
-}
-.button-cv:hover > svg {
-  color: var(--color-background);
-  border-color: rgb(255 250 244 / 24%);
 }
 .text-link {
   display: inline-flex;
@@ -244,22 +239,19 @@ section[id] {
   min-width: 2.75rem;
   min-height: 2.75rem;
   align-items: center;
-  font-family: var(--font-heading);
-  font-size: 2.6rem;
-  line-height: 1;
-  font-weight: 600;
-  letter-spacing: -0.12em;
+  flex-shrink: 0;
 }
-.brand-mark {
-  width: 0.3rem;
-  height: 0.3rem;
-  background: var(--color-accent);
-  margin: 0.9rem 0 0 0.6rem;
-}
+.brand-logo { display: block; flex-shrink: 0; }
+.brand-logo-wordmark { width: clamp(9.5rem, 15vw, 12rem); height: auto; aspect-ratio: 360 / 80; }
+.brand-logo-monogram { width: 3.25rem; height: auto; aspect-ratio: 128 / 104; color: var(--color-accent); }
+.brand-logo-small { width: 2.25rem; height: 2.25rem; }
+.brand-logo-mask { background: currentColor; mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+.brand-responsive, .brand-desktop { display: block; }
+.brand-mobile { display: none; }
 .desktop-nav {
   display: flex;
   gap: 2.25rem;
-  margin-left: 3.5rem;
+  margin-left: 0;
 }
 .nav-link {
   display: flex;
@@ -717,26 +709,43 @@ section[id] {
   gap: 0.75rem 1.5rem;
   margin-top: 1.25rem;
 }
-.button-cv {
+.cv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.4rem;
+  max-width: 100%;
+  padding: 0.5rem 0.55rem 0.5rem 1.35rem;
+  border: 1px solid rgb(148 70 92 / 35%);
+  border-radius: 3rem;
   background: transparent;
-  border: 1px solid var(--color-accent);
   color: var(--color-accent);
+  text-decoration: none;
+  transition: background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
-.button-cv:hover {
-  background: var(--color-accent);
-  color: var(--color-background);
+.cv-link-title { font-size: 0.8rem; font-weight: 600; line-height: 1.2; }
+.cv-preview-label { font-family: var(--font-mono); font-size: 0.55rem; color: var(--color-secondary); }
+.cv-link-arrow {
+  box-sizing: content-box;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  padding: 0.55rem;
+  border-radius: 50%;
+  border: 1px solid rgb(148 70 92 / 20%);
+  background: var(--color-surface);
+  color: var(--color-accent);
+  transition: transform 0.25s, background-color 0.25s;
 }
+.cv-link:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+.cv-link:hover .cv-link-arrow { transform: rotate(45deg); background: var(--color-background); }
+.cv-link-download:hover .cv-link-arrow { transform: translateY(2px); }
+.cv-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
 .contact-cv-link {
   margin-top: 1.5rem;
-  color: var(--color-accent);
-  min-height: 2.75rem;
-}
-.cv-preview-label {
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
-  padding: 0.2rem 0.35rem;
-  border: 1px solid currentColor;
-  border-radius: 0.2rem;
 }
 .capability-evidence {
   display: inline-block;
@@ -951,7 +960,8 @@ section[id] {
   border-radius: 0.6rem;
   transition: background 0.5s, color 0.5s;
 }
-.compact-monogram { font-family: var(--font-heading); font-size: 3.1rem; letter-spacing: -0.1em; line-height: 1; }
+.compact-monogram { display: block; width: min(85%, 15rem); }
+.compact-monogram .brand-logo-wordmark { width: 100%; }
 .compact-edition { font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 0.6rem; }
 .compact-mirror > svg { position: absolute; top: 0.7rem; right: 0.7rem; }
 .compact-toggle-label {
@@ -1004,6 +1014,8 @@ section[id] {
 .swatch-name { display: block; font-size: 0.6rem; line-height: 1.5; padding: 0.4rem 0 0; overflow-wrap: anywhere; }
 .palette-signature { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-accent); font-family: var(--font-heading); font-size: 1.6rem; }
 .palette-signature span { font-family: var(--font-mono); font-size: 0.4rem; letter-spacing: 0.1em; }
+.product-label .brand-logo-small { width: 2.4rem; height: 2.4rem; }
+.lanyard-monogram .brand-logo-small { width: 2rem; height: 2rem; }
 .tool-detail { padding-top: 1rem; border-top: 1px solid var(--color-border); min-height: 9rem; }
 .tool-category { display: block; font-size: 0.6rem; font-family: var(--font-mono); color: var(--color-accent); margin-bottom: 0.4rem; }
 .about-beauty-studio button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
@@ -1508,9 +1520,8 @@ section[id] {
   .menu-trigger {
     display: flex;
   }
-  .brand {
-    font-size: 2.4rem;
-  }
+  .brand-desktop { display: none; }
+  .brand-mobile { display: block; }
   .hero-section {
     padding-top: 7rem;
   }

@@ -1,6 +1,12 @@
 // Presentation copy lives here; personal details and projects live alongside it.
 export const site = {
-  monogram: 'e.',
+  brand: {
+    name: 'Erika Leah',
+    initials: 'ELH',
+    wordmark: '/brand/erika-leah-wordmark.svg',
+    monogram: '/brand/elh-monogram.svg',
+    small: '/brand/elh-small.svg',
+  },
   hero: {
     eyebrow: 'A little curiosity. A lot of possibility.',
     taglines: [

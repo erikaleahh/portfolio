@@ -10,8 +10,15 @@ describe('Interactive About toolkit', () => {
     const user = userEvent.setup()
     let panelTop = 300
     let panelHeight = 500
+    let mobile = false
+    const originalMatchMedia = window.matchMedia
+    window.matchMedia = vi.fn((query) => ({
+      ...originalMatchMedia(query),
+      matches: query === '(max-width: 767px)' ? mobile : originalMatchMedia(query).matches,
+    }))
     const measure = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
-      const top = this.classList.contains('about-beauty-studio') ? panelTop : window.innerHeight + 100
+      const top = this.classList.contains('about-beauty-studio') ? panelTop
+        : this.classList.contains('beauty-toolkit') ? 420 : window.innerHeight + 100
       const height = panelHeight
       return { top, bottom: top + height, height, left: 0, right: 300, width: 300, x: 0, y: top, toJSON: () => ({}) }
     })
@@ -30,7 +37,12 @@ describe('Interactive About toolkit', () => {
       panelTop = 100
       await user.click(screen.getByRole('button', { name: 'Open my toolkit' }))
       expect(window.scrollTo).toHaveBeenCalledTimes(2)
+      await user.click(screen.getByRole('button', { name: 'Close my toolkit' }))
+      mobile = true
+      await user.click(screen.getByRole('button', { name: 'Open my toolkit' }))
+      expect(window.scrollTo).toHaveBeenLastCalledWith({ top: 320, behavior: 'instant' })
     } finally {
+      window.matchMedia = originalMatchMedia
       measure.mockRestore()
       frame.mockRestore()
     }
