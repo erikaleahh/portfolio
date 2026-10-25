@@ -31,3 +31,17 @@ export interface PortfolioProject {
   repositoryUrl: string | null
   liveUrl: string | null
 }
+
+export interface PortfolioCertificate {
+  id: string
+  title: string
+  issuer: string
+  /** ISO date: YYYY-MM-DD, YYYY-MM, or YYYY. */
+  issuedOn: string
+  expiresOn?: string | null
+  credentialId?: string | null
+  image: PortfolioImage | null
+  /** Public HTTPS URL or a root-relative image/PDF path, never a local file-system path. */
+  documentUrl: string | null
+  verificationUrl: string | null
+}

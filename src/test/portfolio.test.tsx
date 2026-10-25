@@ -28,7 +28,7 @@ const renderApp = (path = '/') =>
 describe('Portfolio navigation and content', () => {
   it('renders all sections with honest missing-content states', () => {
     const { container } = renderApp()
-    for (const id of ['home', 'about', 'projects', 'contact'])
+    for (const id of ['home', 'about', 'projects', 'certificates', 'contact'])
       expect(container.querySelector(`#${id}`)).not.toBeNull()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     expect(screen.getAllByRole('article')).toHaveLength(3)

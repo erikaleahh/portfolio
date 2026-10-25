@@ -32,7 +32,7 @@ export function Contact() {
     >
       <div className="page-container contact-content">
         <p className="eyebrow" data-reveal>
-          <span className="section-number">03</span>
+          <span className="section-number">04</span>
           {site.contact.label}
         </p>
         <div className="contact-heading-row" data-reveal>

@@ -22,6 +22,15 @@ export const site = {
     pendingNote:
       'A growing collection. Some project details and previews are still being added. Private source code is not shared.',
   },
+  certificates: {
+    label: 'Continued learning',
+    title: 'Growing beyond the code.',
+    description:
+      'A place for the tech certificates earned along my career and learning journey, with the details behind each credential.',
+    emptyTitle: 'Certificates coming soon.',
+    emptyDescription:
+      'This collection is waiting for my actual certificates. Issuers, dates, and available credential links will appear here once added.',
+  },
   contact: {
     label: 'Make a connection',
     title: ['Have an idea?', "Let's make it real."],
