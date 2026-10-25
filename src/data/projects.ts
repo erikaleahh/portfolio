@@ -21,14 +21,21 @@ export const projects: readonly PortfolioProject[] = [
     liveUrl: 'https://rsvpa.netlify.app/',
   },
   {
-    id: 'q1-project-02',
-    status: 'placeholder',
-    title: '[Q1 PROJECT 2 TITLE]',
-    description: '[PROJECT DESCRIPTION — real project details pending]',
-    technologies: ['React', 'Tailwind CSS', 'GSAP'],
-    image: null,
+    id: 'sip-avenue',
+    status: 'verified',
+    title: 'Sip Avenue — Coffee Shop Prototype',
+    description:
+      'An e-commerce prototype for local coffee shops, with product browsing, filtering, and a shopping-bag interface. Designed as a foundation for a possible future Shopify storefront.',
+    category: 'E-commerce prototype',
+    technologies: ['Figma', 'HTML', 'CSS', 'JavaScript'],
+    image: {
+      src: '/images/projects/sip-avenue-homepage.webp',
+      alt: 'Sip Avenue coffee shop prototype homepage with a cream storefront, the heading Good coffee. Better days., and a coffee photograph.',
+      width: 1265,
+      height: 712,
+    },
     repositoryUrl: null,
-    liveUrl: null,
+    liveUrl: 'https://sip-zeta-eight.vercel.app/',
   },
   {
     id: 'q1-project-03',
