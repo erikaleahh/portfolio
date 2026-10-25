@@ -2,6 +2,7 @@ import { ArrowDown, ArrowDownRight, ArrowUpRight, MapPin } from 'lucide-react'
 import { useState } from 'react'
 import { portfolio, site } from '../data'
 import { SectionLink } from './SectionLink'
+import { LanyardBadge } from './LanyardBadge'
 
 export function Hero() {
   const [imageFailed, setImageFailed] = useState(false)
@@ -73,18 +74,16 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="hero-visual" data-hero-visual>
+        <div
+          className={`hero-visual ${portfolio.profileImage && !imageFailed ? 'hero-visual-lanyard' : ''}`}
+          data-hero-visual
+        >
           <div className="visual-corner visual-corner-tl" aria-hidden="true" />
           <div className="visual-corner visual-corner-br" aria-hidden="true" />
           {portfolio.profileImage && !imageFailed ? (
-            <img
-              className="profile-image"
-              src={portfolio.profileImage.src}
-              alt={portfolio.profileImage.alt}
-              width="600"
-              height="720"
-              fetchPriority="high"
-              onError={() => setImageFailed(true)}
+            <LanyardBadge
+              image={portfolio.profileImage}
+              onImageError={() => setImageFailed(true)}
             />
           ) : (
             <div className="orbital-art" aria-hidden="true">

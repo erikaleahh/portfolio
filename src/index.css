@@ -552,14 +552,6 @@ section[id] {
   font-size: 0.48rem;
   letter-spacing: 0.15em;
 }
-.profile-image {
-  width: 86%;
-  height: 87%;
-  object-fit: cover;
-  margin: 0 auto;
-  border-radius: 50% 50% 0 0;
-  filter: saturate(0.75);
-}
 .hero-meta {
   display: flex;
   align-items: center;
@@ -1729,5 +1721,184 @@ section[tabindex='-1']:focus {
   }
   .certificate-group-heading h3 {
     font-size: 1rem;
+  }
+}
+
+/* A personal portfolio pass, suspended from a stitched burgundy lanyard. */
+.hero-visual.hero-visual-lanyard {
+  height: auto;
+  min-height: 0;
+  margin-top: 0.75rem;
+  padding-bottom: 3rem;
+}
+.lanyard-stage {
+  position: relative;
+  padding: 0.5rem 0.75rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.lanyard-rig {
+  --lanyard-drop: 2rem;
+  position: relative;
+  width: clamp(13rem, 22vw, 18rem);
+  padding-top: var(--lanyard-drop);
+  transform-origin: 50% 0;
+  transform: rotate(-3deg);
+}
+.lanyard-strap {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 2.5rem);
+  width: 5rem;
+  height: calc(var(--lanyard-drop) + 0.15rem);
+  color: var(--color-accent);
+  overflow: visible;
+}
+.lanyard-clip {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--lanyard-drop) - 0.7rem);
+  left: calc(50% - 0.4rem);
+  display: flex;
+  justify-content: center;
+  width: 0.8rem;
+  height: 1.6rem;
+  border: 2px solid #b4a09e;
+  background: #e5d8d0;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px rgb(68 44 53 / 12%);
+}
+.lanyard-clip i {
+  width: 0.25rem;
+  height: 0.65rem;
+  border: 1px solid #8e7379;
+  border-radius: 0.1rem;
+  margin-top: 0.25rem;
+}
+.lanyard-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  width: 100%;
+  padding-top: 0.5rem;
+  background: #fffdf9;
+  border: 1px solid rgb(148 70 92 / 22%);
+  border-radius: 0.85rem;
+  box-shadow:
+    0 1rem 2.5rem rgb(68 44 53 / 12%),
+    inset 0 0 0 4px rgb(248 229 219 / 50%);
+}
+.lanyard-slot {
+  width: 2rem;
+  height: 0.35rem;
+  border-radius: 0.3rem;
+  background: #ddc9c2;
+  margin: 0 auto 0.3rem;
+  box-shadow: inset 0 1px 2px rgb(68 44 53 / 18%);
+}
+.lanyard-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.2rem 0.8rem 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.lanyard-card-top > span:nth-child(2) {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+.lanyard-monogram {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.1em;
+  color: var(--color-accent);
+}
+.lanyard-card-dot {
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  margin-left: auto;
+}
+.lanyard-photo {
+  margin: 0.55rem 0.75rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+}
+.lanyard-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.lanyard-identity {
+  padding: 0 0.8rem 0.65rem;
+}
+.lanyard-name {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+.lanyard-role {
+  color: var(--color-accent);
+  font-size: 0.6rem;
+  line-height: 1.6;
+  margin-top: 0.3rem;
+}
+.lanyard-location {
+  color: var(--color-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  line-height: 1.8;
+  margin-top: 0.25rem;
+}
+.lanyard-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 0 0 0.85rem 0.85rem;
+  color: var(--color-accent);
+}
+.lanyard-card-bottom span {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 767px) {
+  .hero-visual.hero-visual-lanyard {
+    width: min(100%, 24rem);
+    height: auto;
+    min-height: 0;
+    margin-top: 1.5rem;
+  }
+  .lanyard-rig {
+    width: 14rem;
+  }
+  .lanyard-name {
+    font-size: 1.25rem;
+  }
+}
+@media (max-width: 359px) {
+  .hero-visual.hero-visual-lanyard {
+    height: auto;
+  }
+  .lanyard-rig {
+    width: 13rem;
   }
 }

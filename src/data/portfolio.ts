@@ -5,7 +5,10 @@ export const portfolio: PortfolioProfile = {
   role: 'Creative Developer / Frontend Developer',
   tagline: 'Crafting digital experiences through code and creativity.',
   location: { city: 'Digos City', country: 'Philippines' },
-  profileImage: null,
+  profileImage: {
+    src: '/images/erika-leah-habaradas.webp',
+    alt: 'Portrait of Erika Leah Habaradas',
+  },
   biography: {
     status: 'draft',
     paragraphs: [

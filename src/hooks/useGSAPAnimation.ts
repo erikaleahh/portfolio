@@ -30,11 +30,50 @@ export function useGSAPAnimation() {
                 { y: 18, opacity: 0, duration: 0.8, stagger: 0.09 },
                 0.25,
               )
-              .from(
-                root.querySelectorAll('[data-hero-visual]'),
-                { opacity: 0, scale: 0.96, duration: 1.2 },
-                0.3,
-              )
+
+            const lanyardRig = root.querySelector('[data-lanyard-swing]')
+            if (lanyardRig) {
+              // One timeline owns the rig rotation; strap, clip and card move together.
+              const sway = gsap.timeline({
+                delay: 0.35,
+                scrollTrigger: {
+                  trigger: root.querySelector('#home'),
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  toggleActions: 'play pause resume pause',
+                },
+              })
+              sway
+                .fromTo(
+                  lanyardRig,
+                  { rotation: -5 },
+                  {
+                    rotation: 0,
+                    duration: 1.8,
+                    ease: 'elastic.out(1, 0.6)',
+                    force3D: false,
+                  },
+                )
+                .to(lanyardRig, {
+                  rotation: 1,
+                  duration: 2.8,
+                  ease: 'sine.inOut',
+                  force3D: false,
+                })
+                .to(lanyardRig, {
+                  rotation: -1,
+                  duration: 5.6,
+                  ease: 'sine.inOut',
+                  repeat: -1,
+                  yoyo: true,
+                  force3D: false,
+                })
+            }
+            hero.from(
+              root.querySelectorAll('[data-hero-visual]'),
+              { opacity: 0, scale: 0.96, duration: 1.2 },
+              0.3,
+            )
 
             root
               .querySelectorAll<HTMLElement>('[data-reveal]')
@@ -106,6 +145,56 @@ export function useGSAPAnimation() {
                   scrub: 1,
                 },
               })
+            const stage = root.querySelector<HTMLElement>(
+              '[data-lanyard-stage]',
+            )
+            const visual = stage?.closest<HTMLElement>('.hero-visual')
+            if (stage && visual) {
+              const moveX = gsap.quickTo(stage, 'x', {
+                duration: 0.6,
+                ease: 'power2.out',
+                force3D: false,
+              })
+              const moveY = gsap.quickTo(stage, 'y', {
+                duration: 0.6,
+                ease: 'power2.out',
+                force3D: false,
+              })
+              const move = (event: PointerEvent) => {
+                if (
+                  event.pointerType === 'touch' ||
+                  !window.matchMedia('(hover: hover) and (pointer: fine)')
+                    .matches
+                )
+                  return
+                const rect = visual.getBoundingClientRect()
+                if (!rect.width || !rect.height) return
+                moveX(
+                  gsap.utils.clamp(
+                    -1,
+                    1,
+                    ((event.clientX - rect.left) / rect.width) * 2 - 1,
+                  ) * 3,
+                )
+                moveY(
+                  gsap.utils.clamp(
+                    -1,
+                    1,
+                    ((event.clientY - rect.top) / rect.height) * 2 - 1,
+                  ) * 2,
+                )
+              }
+              const reset = () => {
+                moveX(0)
+                moveY(0)
+              }
+              stage.addEventListener('pointermove', move)
+              stage.addEventListener('pointerleave', reset)
+              hoverCleanups.push(() => {
+                stage.removeEventListener('pointermove', move)
+                stage.removeEventListener('pointerleave', reset)
+              })
+            }
             return () => hoverCleanups.forEach((cleanup) => cleanup())
           },
           scope,

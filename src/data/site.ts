@@ -7,6 +7,8 @@ export const site = {
     status: 'Always learning. Always creating.',
     primaryCta: 'Explore my work',
     secondaryCta: 'Get in touch',
+    badgeLabel: 'Portfolio pass',
+    badgeNote: 'Made of curiosity.',
   },
   about: {
     label: 'A little about me',
