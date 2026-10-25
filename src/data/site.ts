@@ -3,7 +3,10 @@ export const site = {
   monogram: 'e.',
   hero: {
     eyebrow: 'A little curiosity. A lot of possibility.',
-    lines: ['Thoughtfully', 'designed.', 'Carefully coded.'],
+    taglines: [
+      ['Design that', 'converts.'],
+      ['Code that', 'connects.'],
+    ],
     status: 'Always learning. Always creating.',
     primaryCta: 'Explore my work',
     secondaryCta: 'Get in touch',
@@ -12,8 +15,15 @@ export const site = {
   },
   about: {
     label: 'A little about me',
-    title: 'Curiosity is where it all starts.',
-    note: 'Good experiences begin with thoughtful details.',
+    title: 'A designer’s eye. A developer’s mindset.',
+    capabilitiesLabel: 'How I contribute',
+    capabilities: [
+      { title: 'Design with intent', description: 'Figma concepts and storefront layouts that give a brand a clear visual direction.', evidence: 'Sip Avenue / Reloved' },
+      { title: 'Make it tangible', description: 'HTML, CSS, and JavaScript prototypes that help developers turn a design into a custom storefront.', evidence: 'Design → prototype → handoff' },
+      { title: 'Refine the experience', description: 'Frontend QA and social media support, bringing attention to both the interface and its presentation.', evidence: 'RSVP · Frontend QA & SMM' },
+    ],
+    projectsCta: 'See it in my work',
+    toolkitNote: 'AI assists the process. My design choices, review, and attention to detail guide the result.',
     skillsLabel: 'My creative toolkit',
   },
   projects: {

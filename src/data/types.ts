@@ -13,6 +13,7 @@ export interface PortfolioProfile {
   profileImage: PortfolioImage | null
   biography: { status: 'draft' | 'verified'; paragraphs: readonly string[] }
   skills: readonly string[]
+  cv: { url: string; fileName: string; isPlaceholder?: boolean } | null
   contact: {
     email: string | null
     githubUrl: string | null

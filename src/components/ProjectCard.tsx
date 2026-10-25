@@ -62,6 +62,30 @@ export function ProjectCard({
             </span>
           </div>
         )}
+        <div className="project-links" role="group" aria-label={`${project.title} links`}>
+          {project.repositoryVisibility === 'private' ? (
+            <span className="unavailable-link private-source">
+              <LockKeyhole size={13} aria-hidden="true" />
+              Private source
+            </span>
+          ) : isWebUrl(project.repositoryUrl) ? (
+            <ExternalLink href={project.repositoryUrl} className="project-link">
+              <Code2 size={15} aria-hidden="true" />
+              Source code
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </ExternalLink>
+          ) : (
+            <span className="unavailable-link">Source pending</span>
+          )}
+          {isWebUrl(project.liveUrl) ? (
+            <ExternalLink href={project.liveUrl} className="project-link project-link-primary">
+              Live demo
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </ExternalLink>
+          ) : (
+            <span className="unavailable-link">Demo pending</span>
+          )}
+        </div>
         <span className="project-category">
           {pending ? 'In the making' : (project.category ?? 'Featured project')}
         </span>
@@ -72,12 +96,6 @@ export function ProjectCard({
           <h3 id={`${project.id}-title`}>
             {pending ? `Q1 Project ${number}` : project.title}
           </h3>
-          <ArrowUpRight
-            className="project-heading-arrow"
-            size={25}
-            strokeWidth={1.5}
-            aria-hidden="true"
-          />
         </div>
         <p className="project-description">
           {pending
@@ -97,30 +115,7 @@ export function ProjectCard({
             ))}
           </ul>
         )}
-        <div className="project-links">
-          {project.repositoryVisibility === 'private' ? (
-            <span className="unavailable-link private-source">
-              <LockKeyhole size={13} aria-hidden="true" />
-              Private source
-            </span>
-          ) : isWebUrl(project.repositoryUrl) ? (
-            <ExternalLink href={project.repositoryUrl} className="project-link">
-              <Code2 size={15} aria-hidden="true" />
-              Source code
-              <ArrowUpRight size={14} aria-hidden="true" />
-            </ExternalLink>
-          ) : (
-            <span className="unavailable-link">Source pending</span>
-          )}
-          {isWebUrl(project.liveUrl) ? (
-            <ExternalLink href={project.liveUrl} className="project-link">
-              Live demo
-              <ArrowUpRight size={14} aria-hidden="true" />
-            </ExternalLink>
-          ) : (
-            <span className="unavailable-link">Demo pending</span>
-          )}
-        </div>
+
       </div>
     </article>
   )

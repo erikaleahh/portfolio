@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, Copy, Mail } from 'lucide-react'
 import { portfolio, site } from '../data'
 import { ExternalLink } from './ExternalLink'
 import { isWebUrl } from '../utils/links'
+import { CvLink } from './CvLink'
 
 export function Contact() {
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>(
@@ -89,6 +90,7 @@ export function Contact() {
                 Public email coming soon
               </p>
             )}
+            <CvLink download />
           </div>
           <div className="contact-socials">
             <span className="mono-label">Find me elsewhere</span>

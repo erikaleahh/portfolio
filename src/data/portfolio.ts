@@ -1,5 +1,11 @@
 import type { PortfolioProfile } from './types'
 
+export const toolkitGroups = [
+  { title: 'Design & prototyping', skills: ['Figma', 'HTML5', 'CSS3', 'JavaScript'] },
+  { title: 'Frontend & workflow', skills: ['React', 'Tailwind CSS', 'GSAP', 'Git', 'GitHub'] },
+  { title: 'AI collaboration', skills: ['Claude', 'ChatGPT'] },
+] as const
+
 export const portfolio: PortfolioProfile = {
   fullName: 'Erika Leah Habaradas',
   role: 'Creative Developer / Frontend Developer',
@@ -12,23 +18,17 @@ export const portfolio: PortfolioProfile = {
   biography: {
     status: 'draft',
     paragraphs: [
-      "I'm an aspiring web developer based in the Philippines with a passion for creating functional, visually engaging, and user-friendly digital experiences. I enjoy combining thoughtful design with modern web technologies to transform creative ideas into interactive applications.",
-      "Currently, I'm expanding my skills in React, JavaScript, frontend development. I continuously explore new tools and techniques to improve my development workflow, strengthen my problem-solving abilities, and build meaningful projects.",
+      "I'm Erika, a creative frontend developer based in Digos City, Philippines. My work brings together Figma design, interactive storefront prototypes, and a close eye for how an interface looks and feels.",
+      "From Sip Avenue and Reloved to frontend QA and social media management for RSVP, I work across design, implementation, and presentation. I'm continuing to grow in React and GSAP, with Claude and ChatGPT as collaborators in my design and development workflow.",
     ],
   },
-  skills: [
-    'Figma',
-    'HTML5',
-    'CSS3',
-    'JavaScript',
-    'React',
-    'Tailwind CSS',
-    'GSAP',
-    'Git',
-    'GitHub',
-    'Claude',
-    'ChatGPT',
-  ],
+  skills: toolkitGroups.flatMap((group) => [...group.skills]),
+  // Replace this PDF with the final CV and set isPlaceholder to false.
+  cv: {
+    url: '/documents/erika-leah-habaradas-cv-placeholder.pdf',
+    fileName: 'Erika-Leah-Habaradas-CV-Preview.pdf',
+    isPlaceholder: true,
+  },
   contact: {
     email: 'erikaleahabaradas@gmail.com',
     githubUrl: 'https://github.com/erikaleahh',

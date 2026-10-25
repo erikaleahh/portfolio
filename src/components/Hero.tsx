@@ -1,8 +1,9 @@
-import { ArrowDown, ArrowDownRight, ArrowUpRight, MapPin } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, MapPin } from 'lucide-react'
 import { useState } from 'react'
 import { portfolio, site } from '../data'
 import { SectionLink } from './SectionLink'
 import { LanyardBadge } from './LanyardBadge'
+import { HeroHeadline } from './HeroHeadline'
 
 export function Hero() {
   const [imageFailed, setImageFailed] = useState(false)
@@ -27,37 +28,7 @@ export function Hero() {
             <span className="hero-intro-rule" aria-hidden="true" />{' '}
             {portfolio.location.country}
           </p>
-          <h1
-            id="hero-title"
-            className="hero-title"
-            aria-label={site.hero.lines.join(' ')}
-          >
-            {site.hero.lines.map((line, index) => (
-              <span className="hero-line-wrap" key={line}>
-                <span
-                  data-hero-line
-                  className={
-                    index === 1 ? 'hero-line accent-text' : 'hero-line'
-                  }
-                >
-                  {line}
-                  {index === 1 && (
-                    <span className="hero-asterisk" aria-hidden="true">
-                      ✳
-                    </span>
-                  )}
-                </span>
-              </span>
-            ))}
-          </h1>
-          <div className="hero-description" data-hero-reveal>
-            <ArrowDownRight
-              size={28}
-              className="text-accent"
-              aria-hidden="true"
-            />
-            <p>{portfolio.tagline}</p>
-          </div>
+          <HeroHeadline />
           <div className="hero-actions" data-hero-reveal>
             <SectionLink
               section="projects"
@@ -67,7 +38,7 @@ export function Hero() {
               {site.hero.primaryCta}
               <ArrowUpRight size={18} aria-hidden="true" />
             </SectionLink>
-            <SectionLink section="contact" className="text-link" data-hover>
+            <SectionLink section="contact" className="button button-secondary" data-hover>
               {site.hero.secondaryCta}
               <ArrowUpRight size={17} aria-hidden="true" />
             </SectionLink>
