@@ -24,7 +24,7 @@ export const portfolio: PortfolioProfile = {
     'GitHub',
   ],
   contact: {
-    email: 'erikahabaradas@g.cjc.edu.ph',
+    email: 'erikaleahabaradas@gmail.com',
     githubUrl: 'https://github.com/erikaleahh',
     linkedinUrl: null,
   },

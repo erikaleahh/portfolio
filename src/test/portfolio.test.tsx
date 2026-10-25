@@ -38,7 +38,7 @@ describe('Portfolio navigation and content', () => {
       screen
         .getByRole('link', { name: /Send me an email/ })
         .getAttribute('href'),
-    ).toBe('mailto:erikahabaradas@g.cjc.edu.ph')
+    ).toBe('mailto:erikaleahabaradas@gmail.com')
     expect(
       container.querySelector(
         'a[href="null"], a[href="undefined"], a[href="[LIVE DEMO URL]"]',
