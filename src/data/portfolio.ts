@@ -17,6 +17,7 @@ export const portfolio: PortfolioProfile = {
     ],
   },
   skills: [
+    'Figma',
     'HTML5',
     'CSS3',
     'JavaScript',
@@ -25,6 +26,8 @@ export const portfolio: PortfolioProfile = {
     'GSAP',
     'Git',
     'GitHub',
+    'Claude',
+    'ChatGPT',
   ],
   contact: {
     email: 'erikaleahabaradas@gmail.com',

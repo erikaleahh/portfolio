@@ -32,6 +32,7 @@ export function useGSAPAnimation() {
               )
 
             const lanyardRig = root.querySelector('[data-lanyard-swing]')
+            let removeLanyardInteraction = () => {}
             if (lanyardRig) {
               // One timeline owns the rig rotation; strap, clip and card move together.
               const sway = gsap.timeline({
@@ -68,6 +69,29 @@ export function useGSAPAnimation() {
                   yoyo: true,
                   force3D: false,
                 })
+
+              // Clicks temporarily take ownership of rotation, then restore idle sway.
+              const swing = gsap.timeline({
+                paused: true,
+                defaults: { ease: 'sine.inOut', force3D: false },
+                onComplete: () => { sway.play(1.8) },
+              })
+              swing
+                .to(lanyardRig, { rotation: 8, duration: 0.22 })
+                .to(lanyardRig, { rotation: -6, duration: 0.4 })
+                .to(lanyardRig, { rotation: 4, duration: 0.36 })
+                .to(lanyardRig, { rotation: -2, duration: 0.32 })
+                .to(lanyardRig, { rotation: 0, duration: 0.3 })
+              const activate = () => {
+                sway.pause()
+                // Repeated taps do not stack competing rotation animations.
+                if (!swing.isActive()) swing.invalidate().restart()
+              }
+              const button = root.querySelector('[data-lanyard-activate]')
+              button?.addEventListener('click', activate)
+              removeLanyardInteraction = () => {
+                button?.removeEventListener('click', activate)
+              }
             }
             hero.from(
               root.querySelectorAll('[data-hero-visual]'),
@@ -195,7 +219,10 @@ export function useGSAPAnimation() {
                 stage.removeEventListener('pointerleave', reset)
               })
             }
-            return () => hoverCleanups.forEach((cleanup) => cleanup())
+            return () => {
+              removeLanyardInteraction()
+              hoverCleanups.forEach((cleanup) => cleanup())
+            }
           },
           scope,
         )

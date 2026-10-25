@@ -1,17 +1,24 @@
 import { Braces, Code2, GitBranch, Layers3, MoveUpRight } from 'lucide-react'
 import { portfolio, site } from '../data'
 import { SectionHeading } from './SectionHeading'
+import { GitHubIcon } from './SocialIcons'
 
-const skillIcons = [
-  Code2,
-  Braces,
-  Braces,
-  Layers3,
-  Layers3,
-  MoveUpRight,
-  GitBranch,
-  GitBranch,
-]
+const skillIcons = {
+  HTML5: Code2,
+  CSS3: Braces,
+  JavaScript: Braces,
+  React: Layers3,
+  'Tailwind CSS': Layers3,
+  GSAP: MoveUpRight,
+  Git: GitBranch,
+  GitHub: GitHubIcon,
+}
+
+const brandLogos: Record<string, string> = {
+  Figma: '/images/toolkit/figma.svg',
+  Claude: '/images/toolkit/claude.svg',
+  ChatGPT: '/images/toolkit/openai.svg',
+}
 
 export function About() {
   return (
@@ -51,17 +58,30 @@ export function About() {
           <div className="skills-area" data-reveal>
             <p className="eyebrow">{site.about.skillsLabel}</p>
             <ul className="skills-grid">
-              {portfolio.skills.map((skill, index) => {
-                const Icon = skillIcons[index % skillIcons.length]
+              {portfolio.skills.map((skill) => {
+                const Icon = skillIcons[skill as keyof typeof skillIcons] ?? Code2
+                const logo = brandLogos[skill]
                 return (
                   <li key={skill}>
-                    <Icon size={18} strokeWidth={1.5} aria-hidden="true" />
+                    {logo ? (
+                      <span
+                        className="skill-brand-logo"
+                        style={{ maskImage: `url("${logo}")` }}
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <Icon size={18} strokeWidth={1.5} aria-hidden="true" />
+                    )}
                     <span>{skill}</span>
                     <span className="skill-dot" aria-hidden="true" />
                   </li>
                 )
               })}
             </ul>
+            <p className="toolkit-note">
+              Design in Figma. Build for the web. Collaborate with Claude and
+              ChatGPT for AI-assisted design and development.
+            </p>
           </div>
         </div>
       </div>

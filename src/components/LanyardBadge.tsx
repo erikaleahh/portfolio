@@ -34,6 +34,13 @@ export function LanyardBadge({
           <i />
         </span>
         <div className="lanyard-card">
+          <button
+            type="button"
+            className="lanyard-interaction"
+            data-lanyard-activate
+            aria-label="Give Erika’s portfolio pass a swing"
+            aria-describedby="lanyard-hint"
+          />
           <div className="lanyard-slot" aria-hidden="true" />
           <div className="lanyard-card-top">
             <span className="lanyard-monogram" aria-hidden="true">
@@ -67,6 +74,9 @@ export function LanyardBadge({
           </div>
         </div>
       </div>
+      <span id="lanyard-hint" className="lanyard-hint">
+        Click or tap to give it a swing
+      </span>
     </div>
   )
 }
