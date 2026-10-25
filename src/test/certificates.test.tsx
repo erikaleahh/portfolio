@@ -30,7 +30,7 @@ const certificate: PortfolioCertificate = {
 
 describe('Certificate showcase', () => {
   it('shows a clear empty collection without invented certificates or links', () => {
-    const { container } = render(<Certificates />)
+    const { container } = render(<Certificates items={[]} />)
     expect(
       screen.getByRole('heading', { name: 'Certificates coming soon.' }),
     ).toBeTruthy()
@@ -143,6 +143,31 @@ describe('Certificate navigation', () => {
 })
 
 describe('Certificate content utilities', () => {
+  it('groups actual learning paths with logical heading levels', () => {
+    render(<Certificates />)
+    expect(screen.getAllByRole('article')).toHaveLength(6)
+    expect(
+      screen.getByRole('heading', {
+        level: 3,
+        name: 'Cybersecurity & networking',
+      }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('heading', {
+        level: 3,
+        name: 'Entrepreneurship & career development',
+      }),
+    ).toBeTruthy()
+    expect(
+      screen.getByRole('heading', {
+        level: 4,
+        name: 'Cyber Threat Management',
+      }),
+    ).toBeTruthy()
+    expect(screen.getByText('5 certificates')).toBeTruthy()
+    expect(screen.getByText('1 certificate')).toBeTruthy()
+    expect(screen.queryByText('Certificates coming soon.')).toBeNull()
+  })
   it('formats real calendar dates without rollover or timezone changes', () => {
     expect(formatCertificateDate('2024-02-29')).toBe('Feb 29, 2024')
     expect(formatCertificateDate('2025-02-29')).toBeNull()

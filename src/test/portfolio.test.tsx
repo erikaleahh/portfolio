@@ -31,7 +31,7 @@ describe('Portfolio navigation and content', () => {
     for (const id of ['home', 'about', 'projects', 'certificates', 'contact'])
       expect(container.querySelector(`#${id}`)).not.toBeNull()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
-    expect(screen.getAllByRole('article')).toHaveLength(3)
+    expect(container.querySelectorAll('#projects article')).toHaveLength(3)
     expect(container.textContent).toContain('Erika Leah Habaradas')
     expect(container.textContent).toContain('Digos City, Philippines')
     expect(

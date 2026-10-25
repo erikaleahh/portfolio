@@ -8,6 +8,13 @@ export function Certificates({
 }: {
   items?: readonly PortfolioCertificate[]
 }) {
+  const groups = new Map<string, PortfolioCertificate[]>()
+  for (const certificate of items) {
+    const category = certificate.category ?? ''
+    const group = groups.get(category) ?? []
+    group.push(certificate)
+    groups.set(category, group)
+  }
   return (
     <section
       id="certificates"
@@ -28,9 +35,28 @@ export function Certificates({
           </p>
         </div>
         {items.length > 0 ? (
-          <div className="certificates-grid">
-            {items.map((certificate) => (
-              <CertificateCard key={certificate.id} certificate={certificate} />
+          <div className="certificate-collections">
+            {[...groups].map(([category, entries]) => (
+              <div key={category} className="certificate-collection">
+                {category && (
+                  <div className="certificate-group-heading" data-reveal>
+                    <h3>{category}</h3>
+                    <span>
+                      {entries.length}{' '}
+                      {entries.length === 1 ? 'certificate' : 'certificates'}
+                    </span>
+                  </div>
+                )}
+                <div className="certificates-grid">
+                  {entries.map((certificate) => (
+                    <CertificateCard
+                      key={certificate.id}
+                      certificate={certificate}
+                      headingLevel={category ? 'h4' : 'h3'}
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         ) : (

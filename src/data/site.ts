@@ -26,7 +26,7 @@ export const site = {
     label: 'Continued learning',
     title: 'Growing beyond the code.',
     description:
-      'A place for the tech certificates earned along my career and learning journey, with the details behind each credential.',
+      'From cybersecurity and networking to entrepreneurial thinking—credentials that reflect the different ways I keep learning.',
     emptyTitle: 'Certificates coming soon.',
     emptyDescription:
       'This collection is waiting for my actual certificates. Issuers, dates, and available credential links will appear here once added.',

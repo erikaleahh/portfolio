@@ -36,6 +36,7 @@ export interface PortfolioCertificate {
   id: string
   title: string
   issuer: string
+  category?: string
   /** ISO date: YYYY-MM-DD, YYYY-MM, or YYYY. */
   issuedOn: string
   expiresOn?: string | null

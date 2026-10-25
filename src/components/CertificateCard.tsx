@@ -7,9 +7,12 @@ import { formatCertificateDate, isCertificateUrl } from '../utils/certificates'
 
 export function CertificateCard({
   certificate,
+  headingLevel = 'h3',
 }: {
   certificate: PortfolioCertificate
+  headingLevel?: 'h3' | 'h4'
 }) {
+  const Heading = headingLevel
   const [failedImage, setFailedImage] = useState(false)
   const issued = formatCertificateDate(certificate.issuedOn)
   const expires = formatCertificateDate(certificate.expiresOn)
@@ -52,7 +55,9 @@ export function CertificateCard({
       </div>
       <div className="certificate-details">
         <p className="certificate-issuer">{certificate.issuer}</p>
-        <h3 id={`${certificate.id}-title`}>{certificate.title}</h3>
+        <Heading id={`${certificate.id}-title`} className="certificate-title">
+          {certificate.title}
+        </Heading>
         <dl className="certificate-meta">
           <div>
             <dt>Issued</dt>
