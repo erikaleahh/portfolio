@@ -3,6 +3,7 @@ import { portfolio, site } from '../data'
 import { SectionHeading } from './SectionHeading'
 import { SectionLink } from './SectionLink'
 import { CvLink } from './CvLink'
+import { Toolkit } from './Toolkit'
 
 export function About() {
   return (
@@ -32,7 +33,7 @@ export function About() {
             </div>
           </div>
         </div>
-
+        <Toolkit />
       </div>
     </section>
   )

@@ -23,8 +23,16 @@ export const site = {
       { title: 'Refine the experience', description: 'Frontend QA and social media support, bringing attention to both the interface and its presentation.', evidence: 'RSVP · Frontend QA & SMM' },
     ],
     projectsCta: 'See it in my work',
-    toolkitNote: 'AI assists the process. My design choices, review, and attention to detail guide the result.',
     skillsLabel: 'My creative toolkit',
+    beauty: {
+      routineIntro: 'A little prep. A little craft. A considered finish.',
+      steps: ['Prep', 'Shape', 'Polish'],
+      compactLabel: 'The creative edit',
+      compactClosed: 'Open my toolkit',
+      compactOpen: 'Close my toolkit',
+      compactHint: 'A palette of tools, chosen with intention.',
+      swatchHint: 'Choose a shade to explore a tool.',
+    },
   },
   projects: {
     label: 'Selected work',

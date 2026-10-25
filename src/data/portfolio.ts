@@ -6,6 +6,20 @@ export const toolkitGroups = [
   { title: 'AI collaboration', skills: ['Claude', 'ChatGPT'] },
 ] as const
 
+export const toolkitDetails: Record<string, string> = {
+  Figma: 'Visual direction, interface layouts, and storefront concepts before the first line of code.',
+  HTML5: 'Semantic page structures and design prototypes that developers can build on.',
+  CSS3: 'Responsive layouts, considered spacing, and the small visual details that bring a design together.',
+  JavaScript: 'Product filters, shopping-bag interfaces, and interactive prototype behavior.',
+  React: 'Reusable components and a growing foundation for interactive frontend applications.',
+  'Tailwind CSS': 'Utility-based styling for consistent, responsive interfaces.',
+  GSAP: 'Entrance animations, scroll reveals, and refined interactions with reduced-motion support.',
+  Git: 'Version control and incremental changes throughout the development process.',
+  GitHub: 'A home for public project source code and development history.',
+  Claude: 'AI collaboration for exploring ideas, implementation approaches, and reviewing work.',
+  ChatGPT: 'AI assistance with design exploration, problem-solving, and development iteration.',
+}
+
 export const portfolio: PortfolioProfile = {
   fullName: 'Erika Leah Habaradas',
   role: 'Creative Developer / Frontend Developer',
