@@ -6,6 +6,41 @@ import { Toolkit } from '../components/Toolkit'
 import { site, toolkitDetails } from '../data'
 
 describe('Interactive About toolkit', () => {
+  it('pauses the toolkit slideshow outside the viewport and resumes when visible', () => {
+    vi.useFakeTimers()
+    const originalMatchMedia = window.matchMedia
+    window.matchMedia = vi.fn((query) => ({ ...originalMatchMedia(query), matches: false }))
+    const observers: { notify: IntersectionObserverCallback; target?: Element; disconnect: ReturnType<typeof vi.fn<() => void>> }[] = []
+    class VisibilityObserver {
+      state: (typeof observers)[number]
+      constructor(notify: IntersectionObserverCallback) {
+        this.state = { notify, disconnect: vi.fn<() => void>() }
+        observers.push(this.state)
+      }
+      observe(target: Element) { this.state.target = target }
+      disconnect() { this.state.disconnect() }
+      unobserve() {}
+    }
+    vi.stubGlobal('IntersectionObserver', VisibilityObserver)
+    try {
+      const { unmount } = render(<Toolkit />)
+      fireEvent.click(screen.getByRole('button', { name: 'Open my toolkit' }))
+      const observer = observers.find((entry) => entry.target?.classList.contains('beauty-toolkit'))!
+      act(() => observer.notify([{ isIntersecting: false } as IntersectionObserverEntry], {} as IntersectionObserver))
+      act(() => vi.advanceTimersByTime(6000))
+      expect(screen.getByRole('button', { name: 'Figma' }).getAttribute('aria-pressed')).toBe('true')
+      act(() => observer.notify([{ isIntersecting: true } as IntersectionObserverEntry], {} as IntersectionObserver))
+      act(() => vi.advanceTimersByTime(site.about.beauty.toolIntervalMs))
+      expect(screen.getByRole('button', { name: 'HTML5' }).getAttribute('aria-pressed')).toBe('true')
+      unmount()
+      expect(observers.every((entry) => entry.disconnect.mock.calls.length === 1)).toBe(true)
+    } finally {
+      window.matchMedia = originalMatchMedia
+      vi.unstubAllGlobals()
+      vi.useRealTimers()
+    }
+  })
+
   it('cycles only while the toolkit is open, pauses for interaction, and wraps back to the first tool', () => {
     vi.useFakeTimers()
     const originalMatchMedia = window.matchMedia

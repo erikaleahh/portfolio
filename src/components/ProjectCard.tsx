@@ -22,6 +22,7 @@ export function ProjectCard({
     >
       <div
         className="project-preview"
+        data-project-preview
         style={
           project.image?.width && project.image?.height
             ? {

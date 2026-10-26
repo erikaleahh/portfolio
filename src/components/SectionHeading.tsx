@@ -12,12 +12,20 @@ export function SectionHeading({
   id,
 }: SectionHeadingProps) {
   return (
-    <div className="section-heading" data-reveal>
+    <div className="section-heading" data-heading>
       <p className="eyebrow">
         <span className="section-number">{number}</span>
         {label}
       </p>
-      <h2 id={id}>{title}</h2>
+      <h2 id={id} aria-label={title}>
+        {title.split(' ').map((word, index, words) => (
+          <span key={`${word}-${index}`}>
+            <span className="heading-word-wrap" aria-hidden="true">
+              <span data-heading-word className={index === words.length - 1 ? 'heading-word heading-word-accent' : 'heading-word'}>{word}</span>
+            </span>{index < words.length - 1 ? ' ' : ''}
+          </span>
+        ))}
+      </h2>
     </div>
   )
 }

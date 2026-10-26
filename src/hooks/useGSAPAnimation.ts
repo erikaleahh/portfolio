@@ -22,13 +22,13 @@ export function useGSAPAnimation() {
             hero
               .from(root.querySelectorAll('[data-hero-line]'), {
                 yPercent: 110,
-                duration: 1.1,
-                stagger: 0.12,
+                duration: 0.95,
+                stagger: 0.1,
               })
               .from(
                 root.querySelectorAll('[data-hero-reveal]'),
-                { y: 18, opacity: 0, duration: 0.8, stagger: 0.09 },
-                0.25,
+                { y: 12, opacity: 0, duration: 0.65, stagger: 0.08 },
+                0.2,
               )
 
             const lanyardRig = root.querySelector('[data-lanyard-swing]')
@@ -99,31 +99,27 @@ export function useGSAPAnimation() {
               0.3,
             )
 
+            root.querySelectorAll<HTMLElement>('[data-heading]').forEach((heading) => {
+              const reveal = gsap.timeline({
+                defaults: { ease: 'power3.out' },
+                scrollTrigger: { trigger: heading, start: 'top 92%', once: true },
+              })
+              reveal.from(heading.querySelector('.eyebrow'), { y: 8, opacity: 0, duration: 0.55 })
+                .from(heading.querySelectorAll('[data-heading-word]'), {
+                  yPercent: 110,
+                  duration: 0.8,
+                  stagger: 0.045,
+                  clearProps: 'transform',
+                }, 0.1)
+            })
+
             root
               .querySelectorAll<HTMLElement>('[data-reveal]')
               .forEach((element) => {
                 gsap.from(element, {
-                  y: 26,
+                  y: 18,
                   opacity: 0,
-                  duration: 0.85,
-                  ease: 'power2.out',
-                  scrollTrigger: {
-                    trigger: element,
-                    start: 'top 94%',
-                    once: true,
-                  },
-                })
-              })
-
-            // Each card has its own trigger so mobile layouts never reveal offscreen cards early.
-            root
-              .querySelectorAll<HTMLElement>('[data-project]')
-              .forEach((element, index) => {
-                gsap.from(element, {
-                  y: 40,
-                  opacity: 0,
-                  duration: 0.9,
-                  delay: (index % 2) * 0.08,
+                  duration: 0.7,
                   ease: 'power2.out',
                   scrollTrigger: {
                     trigger: element,
@@ -134,11 +130,43 @@ export function useGSAPAnimation() {
               })
 
             const hoverCleanups: (() => void)[] = []
+            // Each project gets a separate sequence so mobile cards wait for their own viewport entry.
+            root
+              .querySelectorAll<HTMLElement>('[data-project]')
+              .forEach((element) => {
+                const preview = element.querySelector('[data-project-preview]')
+                const reveal = gsap.timeline({
+                  defaults: { ease: 'power3.out' },
+                  scrollTrigger: {
+                    trigger: element,
+                    start: 'top 94%',
+                    once: true,
+                  },
+                })
+                reveal.from(preview, {
+                  y: 24,
+                  opacity: 0,
+                  clipPath: 'inset(0 0 8% 0 round 12px)',
+                  duration: 0.95,
+                  clearProps: 'transform,opacity,clipPath',
+                }).from(element.querySelectorAll('.project-info > *'), {
+                  y: 12,
+                  opacity: 0,
+                  duration: 0.6,
+                  stagger: 0.065,
+                  clearProps: 'transform,opacity',
+                }, 0.2)
+                // A focused project action should never remain behind a reveal mask.
+                const finish = () => { reveal.progress(1) }
+                element.addEventListener('focusin', finish)
+                hoverCleanups.push(() => element.removeEventListener('focusin', finish))
+              })
+
             root
               .querySelectorAll<HTMLElement>('[data-hover]')
               .forEach((element) => {
                 const tween = gsap.to(element, {
-                  y: -3,
+                  y: -2,
                   duration: 0.25,
                   ease: 'power2.out',
                   paused: true,
@@ -234,8 +262,19 @@ export function useGSAPAnimation() {
         // Static content is the baseline: revert any partial setup on failure.
         media.revert()
       }
+      // Opening the compact changes the height of About and every later scroll trigger.
+      let refreshFrame = 0
+      const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(() => {
+        cancelAnimationFrame(refreshFrame)
+        refreshFrame = requestAnimationFrame(() => {
+          if (!disposed) ScrollTrigger.refresh()
+        })
+      })
+      observer?.observe(scope.current)
       return () => {
         disposed = true
+        observer?.disconnect()
+        cancelAnimationFrame(refreshFrame)
         media.revert()
       }
     },

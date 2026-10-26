@@ -1,13 +1,21 @@
-import { useEffect, useState, type FocusEvent } from 'react'
+import { useEffect, useState, type FocusEvent, type RefObject } from 'react'
 
-export function useAutoCycle(count: number, delay: number, enabled = true) {
+export function useAutoCycle(count: number, delay: number, enabled = true, scope?: RefObject<HTMLElement | null>) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [pageVisible, setPageVisible] = useState(() => !document.hidden)
-  const autoplay = enabled && !paused && !hovered && !focused && !reducedMotion && pageVisible
+  const [inView, setInView] = useState(true)
+  const autoplay = enabled && !paused && !hovered && !focused && !reducedMotion && pageVisible && inView
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined' || !scope?.current) return
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.1 })
+    observer.observe(scope.current)
+    return () => observer.disconnect()
+  }, [scope])
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')

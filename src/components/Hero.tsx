@@ -18,11 +18,11 @@ export function Hero() {
       aria-labelledby="hero-title"
     >
       <div className="hero-grid page-container">
-        <div className="hero-intro" data-hero-reveal>
-          <span className="status-dot" aria-hidden="true" />
-          <p>{site.hero.status}</p>
-        </div>
         <div className="hero-copy">
+          <div className="hero-intro" data-hero-reveal>
+            <span className="status-dot" aria-hidden="true" />
+            <p>{site.hero.status}</p>
+          </div>
           <p className="eyebrow hero-eyebrow" data-hero-reveal>
             {portfolio.fullName ?? '[Your full name]'}{' '}
             <span className="hero-intro-rule" aria-hidden="true" />{' '}

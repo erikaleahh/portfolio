@@ -134,6 +134,9 @@ describe('Portfolio navigation and content', () => {
     }))
     const animated = renderApp()
     expect(ScrollTrigger.getAll().length).toBeGreaterThan(baseline)
+    const preview = animated.container.querySelector<HTMLElement>('[data-project-preview]')!
+    fireEvent.focusIn(preview.querySelector('a')!)
+    expect(preview.style.clipPath).toBe('')
     animated.unmount()
     expect(ScrollTrigger.getAll()).toHaveLength(baseline)
   })

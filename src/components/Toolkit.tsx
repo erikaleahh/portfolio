@@ -4,6 +4,7 @@ import { site, toolkitGroups, toolkitDetails } from '../data'
 import { GitHubIcon } from './SocialIcons'
 import { BrandLogo } from './BrandLogo'
 import { useAutoCycle } from '../hooks/useAutoCycle'
+import { useCompactMotion, usePanelMotion } from '../hooks/useStudioMotion'
 
 const skillIcons = {
   HTML5: Code2, CSS3: Braces, JavaScript: Braces, React: Layers3,
@@ -26,12 +27,15 @@ function ToolMark({ name }: { name: string }) {
 }
 
 function ContributionRoutine() {
-  const cycle = useAutoCycle(site.about.capabilities.length, 2000)
+  const routineRef = useRef<HTMLDivElement>(null)
+  const cycle = useAutoCycle(site.about.capabilities.length, 2000, true, routineRef)
   const { index: selected, reducedMotion, autoplay, paused } = cycle
+  const detailRef = usePanelMotion(selected)
 
   const capability = site.about.capabilities[selected]
   return (
     <div
+      ref={routineRef}
       className="beauty-routine"
       data-reveal
       {...cycle.interactionProps}
@@ -67,7 +71,7 @@ function ContributionRoutine() {
           </button>
         )}
       </div>
-      <div className="routine-detail" id="contribution-detail" aria-live={autoplay ? 'off' : 'polite'} aria-atomic="true">
+      <div ref={detailRef} className="routine-detail" id="contribution-detail" aria-live={autoplay ? 'off' : 'polite'} aria-atomic="true">
         <h4>{capability.title}</h4>
         <p>{capability.description}</p>
         <span className="capability-evidence">{capability.evidence}</span>
@@ -78,10 +82,13 @@ function ContributionRoutine() {
 
 function ToolkitCompact() {
   const [open, setOpen] = useState(false)
-  const cycle = useAutoCycle(tools.length, site.about.beauty.toolIntervalMs, open)
+  const toolkitRef = useRef<HTMLDivElement>(null)
+  const cycle = useAutoCycle(tools.length, site.about.beauty.toolIntervalMs, open, toolkitRef)
   const activeTool = tools[cycle.index]
   const selected = activeTool.name
   const compactRef = useRef<HTMLDivElement>(null)
+  const detailRef = usePanelMotion(selected)
+  useCompactMotion(compactRef, open)
 
   useEffect(() => {
     if (!open) return
@@ -106,7 +113,7 @@ function ToolkitCompact() {
   }, [open])
 
   return (
-    <div className="beauty-toolkit" data-reveal>
+    <div ref={toolkitRef} className="beauty-toolkit" data-reveal>
       <h3 id="toolkit-title" className="eyebrow">{site.about.skillsLabel}</h3>
       <p className="beauty-intro">{site.about.beauty.compactHint}</p>
       <div ref={compactRef} className={`makeup-compact ${open ? 'is-open' : ''} ${cycle.autoplay ? 'is-cycling' : ''}`} style={{ '--cycle-duration': `${site.about.beauty.toolIntervalMs}ms` } as CSSProperties}>
@@ -118,6 +125,7 @@ function ToolkitCompact() {
           onClick={() => setOpen(!open)}
         >
           <span className="compact-mirror" aria-hidden="true">
+            <span className="compact-sheen" />
             <span className="compact-monogram"><BrandLogo variant="wordmark" monochrome /></span>
             <span className="compact-edition">{site.about.beauty.compactLabel}</span>
             <Sparkles size={20} strokeWidth={1} />
@@ -160,7 +168,7 @@ function ToolkitCompact() {
             <li className="palette-signature" aria-hidden="true"><BrandLogo variant="small" /><span>THE EDIT</span></li>
           </ul>
           <div className="tool-detail" id="tool-detail" aria-live={cycle.autoplay ? 'off' : 'polite'} aria-atomic="true">
-            <div key={selected} className="tool-detail-content">
+            <div ref={detailRef} className="tool-detail-content">
               <div className="tool-detail-meta">
                 <span className="tool-category">{activeTool.category}</span>
                 <span className="tool-position" aria-hidden="true">{String(cycle.index + 1).padStart(2, '0')} / {tools.length}</span>
