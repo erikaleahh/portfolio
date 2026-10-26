@@ -33,20 +33,19 @@ export const portfolio: PortfolioProfile = {
     status: 'draft',
     paragraphs: [
       "I'm Erika, a creative frontend developer based in Digos City, Philippines. My work brings together Figma design, interactive storefront prototypes, and a close eye for how an interface looks and feels.",
-      "From Sip Avenue and Reloved to frontend QA and social media management for RSVP, I work across design, implementation, and presentation. I'm continuing to grow in React and GSAP, with Claude and ChatGPT as collaborators in my design and development workflow.",
+      "I bring thoughtful design and code together to create intuitive digital experiences, always learning and refining my craft along the way.",
     ],
   },
   skills: toolkitGroups.flatMap((group) => [...group.skills]),
-  // Replace this PDF with the final CV and set isPlaceholder to false.
   cv: {
-    url: '/documents/erika-leah-habaradas-cv-placeholder.pdf',
-    fileName: 'Erika-Leah-Habaradas-CV-Preview.pdf',
-    isPlaceholder: true,
+    url: '/documents/erika-leah-habaradas-cv.pdf',
+    fileName: 'Erika-Leah-Habaradas-CV.pdf',
+    isPlaceholder: false,
   },
   contact: {
     email: 'erikaleahabaradas@gmail.com',
     githubUrl: 'https://github.com/erikaleahh',
-    linkedinUrl: null,
+    linkedinUrl: 'https://www.linkedin.com/in/erika-leah-habaradas-7a6202447',
   },
 }
 

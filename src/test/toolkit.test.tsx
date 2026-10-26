@@ -6,6 +6,65 @@ import { Toolkit } from '../components/Toolkit'
 import { site, toolkitDetails } from '../data'
 
 describe('Interactive About toolkit', () => {
+  it('cycles only while the toolkit is open, pauses for interaction, and wraps back to the first tool', () => {
+    vi.useFakeTimers()
+    const originalMatchMedia = window.matchMedia
+    window.matchMedia = vi.fn((query) => ({ ...originalMatchMedia(query), matches: false }))
+    const step = () => act(() => vi.advanceTimersByTime(site.about.beauty.toolIntervalMs))
+    const selected = (name: string) => expect(screen.getByRole('button', { name }).getAttribute('aria-pressed')).toBe('true')
+    try {
+      const { unmount } = render(<Toolkit />)
+      act(() => vi.advanceTimersByTime(12000))
+      fireEvent.click(screen.getByRole('button', { name: 'Open my toolkit' }))
+      selected('Figma')
+      const palette = screen.getByRole('list', { name: 'Creative tools' })
+      fireEvent.mouseEnter(palette)
+      step()
+      selected('Figma')
+      fireEvent.mouseLeave(palette)
+      step()
+      selected('HTML5')
+      fireEvent.focus(screen.getByRole('button', { name: 'HTML5' }))
+      step()
+      selected('HTML5')
+      fireEvent.blur(screen.getByRole('button', { name: 'HTML5' }), { relatedTarget: null })
+      step()
+      selected('CSS3')
+      fireEvent.click(screen.getByRole('button', { name: 'Claude' }))
+      step()
+      selected('Claude')
+      fireEvent.click(screen.getByRole('button', { name: 'Resume toolkit slideshow' }))
+      step()
+      selected('ChatGPT')
+      step()
+      selected('Figma')
+      fireEvent.click(screen.getByRole('button', { name: 'Close my toolkit' }))
+      act(() => vi.advanceTimersByTime(12000))
+      fireEvent.click(screen.getByRole('button', { name: 'Open my toolkit' }))
+      selected('Figma')
+      step()
+      selected('HTML5')
+      unmount()
+      expect(vi.getTimerCount()).toBe(0)
+    } finally {
+      window.matchMedia = originalMatchMedia
+      vi.useRealTimers()
+    }
+  })
+
+  it('does not automatically change tools when reduced motion is preferred', () => {
+    vi.useFakeTimers()
+    try {
+      render(<Toolkit />)
+      fireEvent.click(screen.getByRole('button', { name: 'Open my toolkit' }))
+      act(() => vi.advanceTimersByTime(12000))
+      expect(screen.getByRole('button', { name: 'Figma' }).getAttribute('aria-pressed')).toBe('true')
+      expect(screen.queryByRole('button', { name: 'Pause toolkit slideshow' })).toBeNull()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
   it('aligns the whole studio below the header without scrolling further for a tall palette', async () => {
     const user = userEvent.setup()
     let panelTop = 300

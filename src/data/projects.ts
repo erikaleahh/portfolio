@@ -24,6 +24,7 @@ export const projects: readonly PortfolioProject[] = [
     id: 'sip-avenue',
     status: 'verified',
     title: 'Sip Avenue — Coffee Shop Prototype',
+    role: 'Storefront Design & Frontend Prototyping',
     description:
       'An e-commerce prototype for local coffee shops, with product browsing, filtering, and a shopping-bag interface. Designed as a foundation for a possible future Shopify storefront.',
     category: 'E-commerce prototype',

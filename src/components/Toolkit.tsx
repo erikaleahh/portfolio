@@ -3,6 +3,7 @@ import { Braces, ChevronDown, Code2, GitBranch, Layers3, MoveUpRight, Pause, Pla
 import { site, toolkitGroups, toolkitDetails } from '../data'
 import { GitHubIcon } from './SocialIcons'
 import { BrandLogo } from './BrandLogo'
+import { useAutoCycle } from '../hooks/useAutoCycle'
 
 const skillIcons = {
   HTML5: Code2, CSS3: Braces, JavaScript: Braces, React: Layers3,
@@ -25,45 +26,15 @@ function ToolMark({ name }: { name: string }) {
 }
 
 function ContributionRoutine() {
-  const [selected, setSelected] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const [hovered, setHovered] = useState(false)
-  const [focused, setFocused] = useState(false)
-  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  const [pageVisible, setPageVisible] = useState(() => !document.hidden)
-  const autoplay = !paused && !hovered && !focused && !reducedMotion && pageVisible
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const updateMotion = () => setReducedMotion(media.matches)
-    const updateVisibility = () => setPageVisible(!document.hidden)
-    media.addEventListener('change', updateMotion)
-    document.addEventListener('visibilitychange', updateVisibility)
-    return () => {
-      media.removeEventListener('change', updateMotion)
-      document.removeEventListener('visibilitychange', updateVisibility)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!autoplay) return
-    const timer = window.setTimeout(() => {
-      setSelected((index) => (index + 1) % site.about.capabilities.length)
-    }, 2000)
-    return () => window.clearTimeout(timer)
-  }, [autoplay, selected])
+  const cycle = useAutoCycle(site.about.capabilities.length, 2000)
+  const { index: selected, reducedMotion, autoplay, paused } = cycle
 
   const capability = site.about.capabilities[selected]
   return (
     <div
       className="beauty-routine"
       data-reveal
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false)
-      }}
+      {...cycle.interactionProps}
     >
       <h3 className="eyebrow" id="contribution-title">{site.about.capabilitiesLabel}</h3>
       <p className="beauty-intro">{site.about.beauty.routineIntro}</p>
@@ -76,10 +47,7 @@ function ContributionRoutine() {
             aria-label={`${site.about.beauty.steps[index]}: ${item.title}`}
             aria-pressed={selected === index}
             aria-controls="contribution-detail"
-            onClick={() => {
-              setSelected(index)
-              setPaused(true)
-            }}
+            onClick={() => cycle.select(index)}
           >
             <span className="product-display" aria-hidden="true">
               <span className="product-vessel">
@@ -93,7 +61,7 @@ function ContributionRoutine() {
       </div>
       <div className="routine-control-row">
         {!reducedMotion && (
-          <button type="button" className="routine-autoplay" onClick={() => setPaused(!paused)} aria-label={paused ? 'Resume contribution slideshow' : 'Pause contribution slideshow'}>
+          <button type="button" className="routine-autoplay" onClick={cycle.togglePaused} aria-label={paused ? 'Resume contribution slideshow' : 'Pause contribution slideshow'}>
             {paused ? <Play size={12} aria-hidden="true" /> : <Pause size={12} aria-hidden="true" />}
             {paused ? 'Resume' : 'Pause'}
           </button>
@@ -110,7 +78,9 @@ function ContributionRoutine() {
 
 function ToolkitCompact() {
   const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState('Figma')
+  const cycle = useAutoCycle(tools.length, site.about.beauty.toolIntervalMs, open)
+  const activeTool = tools[cycle.index]
+  const selected = activeTool.name
   const compactRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -135,12 +105,11 @@ function ToolkitCompact() {
     return () => window.cancelAnimationFrame(frame)
   }, [open])
 
-  const activeTool = tools.find((tool) => tool.name === selected)!
   return (
     <div className="beauty-toolkit" data-reveal>
       <h3 id="toolkit-title" className="eyebrow">{site.about.skillsLabel}</h3>
       <p className="beauty-intro">{site.about.beauty.compactHint}</p>
-      <div ref={compactRef} className={`makeup-compact ${open ? 'is-open' : ''}`}>
+      <div ref={compactRef} className={`makeup-compact ${open ? 'is-open' : ''} ${cycle.autoplay ? 'is-cycling' : ''}`} style={{ '--cycle-duration': `${site.about.beauty.toolIntervalMs}ms` } as CSSProperties}>
         <button
           type="button"
           className="compact-lid"
@@ -160,8 +129,16 @@ function ToolkitCompact() {
         </button>
         <div className="compact-hinge" aria-hidden="true"><i /><i /></div>
         <div id="compact-palette" className="compact-palette" hidden={!open}>
-          <p className="beauty-hint">{site.about.beauty.swatchHint}</p>
-          <ul className="tool-swatch-grid" aria-label="Creative tools">
+          <div className="palette-controls">
+            <p className="beauty-hint">{site.about.beauty.swatchHint}</p>
+            {!cycle.reducedMotion && (
+              <button type="button" className="routine-autoplay" onClick={cycle.togglePaused} aria-label={cycle.paused ? 'Resume toolkit slideshow' : 'Pause toolkit slideshow'}>
+                {cycle.paused ? <Play size={12} aria-hidden="true" /> : <Pause size={12} aria-hidden="true" />}
+                {cycle.paused ? 'Resume' : 'Pause'}
+              </button>
+            )}
+          </div>
+          <ul className="tool-swatch-grid" aria-label="Creative tools" {...cycle.interactionProps}>
             {tools.map((tool, index) => (
               <li key={tool.name}>
                 <button
@@ -170,19 +147,27 @@ function ToolkitCompact() {
                   style={{ '--swatch': shades[index % shades.length] } as CSSProperties}
                   aria-pressed={selected === tool.name}
                   aria-controls="tool-detail"
-                  onClick={() => setSelected(tool.name)}
+                  onClick={() => cycle.select(index)}
                 >
-                  <span className="swatch-pan"><ToolMark name={tool.name} /></span>
+                  <span className="swatch-pan">
+                    <ToolMark name={tool.name} />
+                    {cycle.index === index && <span key={`${index}-${cycle.autoplay}`} className="swatch-timer" aria-hidden="true" />}
+                  </span>
                   <span className="swatch-name">{tool.name}</span>
                 </button>
               </li>
             ))}
             <li className="palette-signature" aria-hidden="true"><BrandLogo variant="small" /><span>THE EDIT</span></li>
           </ul>
-          <div className="tool-detail" id="tool-detail" aria-live="polite" aria-atomic="true">
-            <span className="tool-category">{activeTool.category}</span>
-            <h4>{selected}</h4>
-            <p>{toolkitDetails[selected]}</p>
+          <div className="tool-detail" id="tool-detail" aria-live={cycle.autoplay ? 'off' : 'polite'} aria-atomic="true">
+            <div key={selected} className="tool-detail-content">
+              <div className="tool-detail-meta">
+                <span className="tool-category">{activeTool.category}</span>
+                <span className="tool-position" aria-hidden="true">{String(cycle.index + 1).padStart(2, '0')} / {tools.length}</span>
+              </div>
+              <h4>{selected}</h4>
+              <p>{toolkitDetails[selected]}</p>
+            </div>
           </div>
         </div>
       </div>

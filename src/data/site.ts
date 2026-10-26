@@ -38,6 +38,7 @@ export const site = {
       compactOpen: 'Close my toolkit',
       compactHint: 'A palette of tools, chosen with intention.',
       swatchHint: 'Choose a shade to explore a tool.',
+      toolIntervalMs: 2000,
     },
   },
   projects: {
