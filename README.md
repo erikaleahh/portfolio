@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+# Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal developer portfolio of Erika Leah Habaradas.
 
-Currently, two official plugins are available:
+## Technology stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React and TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- GSAP with ScrollTrigger and `@gsap/react`
+- Lucide React
+- Vitest, Testing Library, and axe-core
+- Oxlint
 
-## React Compiler
+## Requirements
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 24.x
+- npm
+- Git
 
-## Expanding the Oxlint configuration
+## Local setup
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+git clone https://github.com/erikaleahh/portfolio.git
+cd portfolio
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open the local URL printed in the terminal.
+
+## Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+The production files are generated in `dist/`. The preview command serves the build locally.
+
+## Checks
+
+```bash
+npm run lint
+npm test
+```
+
+Run tests in watch mode with `npm run test:watch`.
