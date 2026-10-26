@@ -33,7 +33,7 @@ export const portfolio: PortfolioProfile = {
     status: 'draft',
     paragraphs: [
       "I'm Erika, a creative frontend developer based in Digos City, Philippines. My work brings together Figma design, interactive storefront prototypes, and a close eye for how an interface looks and feels.",
-      "I bring thoughtful design and code together to create intuitive digital experiences, always learning and refining my craft along the way.",
+      "I bring thoughtful design and code together to create intuitive digital experiences, using tools like Claude and ChatGPT to explore ideas and support my workflow while continually refining my craft.",
     ],
   },
   skills: toolkitGroups.flatMap((group) => [...group.skills]),
